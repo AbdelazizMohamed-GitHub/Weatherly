@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weatherly/core/utils/app_color.dart';
+import 'package:weatherly/core/utils/app_image.dart';
 
-import 'package:weatherly/utils/app_color.dart';
-import 'package:weatherly/utils/app_image.dart';
+
 
 class DaysScreen extends StatelessWidget {
   const DaysScreen({super.key});

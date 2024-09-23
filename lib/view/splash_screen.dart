@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weatherly/core/utils/app_color.dart';
+import 'package:weatherly/core/utils/app_image.dart';
 
-import 'package:weatherly/utils/app_color.dart';
-import 'package:weatherly/utils/app_image.dart';
+
 import 'package:weatherly/view/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {

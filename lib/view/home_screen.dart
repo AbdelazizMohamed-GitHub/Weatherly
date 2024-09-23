@@ -3,8 +3,9 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:weatherly/utils/app_color.dart';
-import 'package:weatherly/utils/app_image.dart';
+import 'package:weatherly/core/utils/app_color.dart';
+import 'package:weatherly/core/utils/app_image.dart';
+
 import 'package:weatherly/view/widget/custom_degree_item.dart';
 
 class HomeScreen extends StatelessWidget {
