@@ -14,33 +14,35 @@ class WeatherCubit extends Cubit<WeatherState> {
 
   void getWeather({required String cityName}) async {
     try {
-      emit(WeatherLoading());
+      emit(CityWeatherLoading());
       WeatherEntity weather = await WeatherService().getWeather(cityName);
-      emit(WeatherSuccess(weatherEntity: weather));
+      emit(CityWeatherSuccess(weatherEntity: weather));
     } catch (e) {
       if (e is DioException) {
-        return emit(WeatherError(error: DioExceptions.fromDioError(e).message));
+      print("11111111111111${DioExceptions.fromDioError(e).message}");
+
+        return emit(CityWeatherError(error: DioExceptions.fromDioError(e).message));
       }
-      emit(WeatherError(error: "Something went wrong"));
+      emit(CityWeatherError(error: "Something went wrong"));
     }
   }
 
   getWeatherForCurrentLocation() async {
     try {
-      emit(WeatherLoading());
+      emit(CurrentWeatherLoading());
       Position position = await LocationService.getCurrentLocation();
       print("latitude: ${position.latitude} longitude: ${position.longitude}");
       WeatherEntity weather = await WeatherService()
           .getWeatherForCurrentLocation(
               latitude: position.latitude, longitude: position.longitude);
-      emit(WeatherSuccess(weatherEntity: weather));
+      emit(CurrentWeatherSuccess(weatherEntity: weather));
     } catch (e) {
       print("11111111111111${e.toString()}");
       if (e is DioException) {
-        return emit(WeatherError(error: DioExceptions.fromDioError(e).message));
+        return emit(CurrentWeatherError(error: DioExceptions.fromDioError(e).message));
       }
 
-      emit(WeatherError(error: e.toString()));
+      emit(CurrentWeatherError(error: e.toString()));
     }
   }
 }

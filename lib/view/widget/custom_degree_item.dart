@@ -27,13 +27,13 @@ class CustomDegreeItem extends StatelessWidget {
         Text(
           number,
           style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
         ),
         Text(
           title,
           style: TextStyle(
             color: Colors.black,
-            fontSize: 14,
+            fontSize: 12,
           ),
         )
       ],
