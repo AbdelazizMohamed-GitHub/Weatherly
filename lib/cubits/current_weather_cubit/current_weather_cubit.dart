@@ -3,29 +3,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:weatherly/core/cubits/weather_cubit/weather_state.dart';
+import 'package:weatherly/cubits/current_weather_cubit/current_weather_state.dart';
 import 'package:weatherly/core/failure/dio_error.dart';
 import 'package:weatherly/core/service/location_service.dart';
 import 'package:weatherly/core/service/weather_service.dart';
 import 'package:weatherly/model/weather_entity.dart';
 
-class WeatherCubit extends Cubit<WeatherState> {
-  WeatherCubit() : super(WeatherInitial());
-
-  void getWeather({required String cityName}) async {
-    try {
-      emit(CityWeatherLoading());
-      WeatherEntity weather = await WeatherService().getWeather(cityName);
-      emit(CityWeatherSuccess(weatherEntity: weather));
-    } catch (e) {
-      if (e is DioException) {
-      print("11111111111111${DioExceptions.fromDioError(e).message}");
-
-        return emit(CityWeatherError(error: DioExceptions.fromDioError(e).message));
-      }
-      emit(CityWeatherError(error: "Something went wrong"));
-    }
-  }
+class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
+  CurrentWeatherCubit() : super(WeatherInitial());
 
   getWeatherForCurrentLocation() async {
     try {
@@ -39,7 +24,8 @@ class WeatherCubit extends Cubit<WeatherState> {
     } catch (e) {
       print("11111111111111${e.toString()}");
       if (e is DioException) {
-        return emit(CurrentWeatherError(error: DioExceptions.fromDioError(e).message));
+        return emit(
+            CurrentWeatherError(error: DioExceptions.fromDioError(e).message));
       }
 
       emit(CurrentWeatherError(error: e.toString()));

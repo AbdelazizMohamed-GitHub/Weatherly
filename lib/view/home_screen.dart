@@ -2,10 +2,9 @@
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weatherly/core/cubits/weather_cubit/weather_cubit.dart';
-import 'package:weatherly/core/cubits/weather_cubit/weather_state.dart';
+import 'package:weatherly/cubits/current_weather_cubit/current_weather_cubit.dart';
+import 'package:weatherly/cubits/current_weather_cubit/current_weather_state.dart';
 import 'package:weatherly/core/utils/app_color.dart';
 import 'package:weatherly/core/utils/app_image.dart';
 import 'package:weatherly/model/weather_entity.dart';
@@ -14,13 +13,19 @@ import 'package:weatherly/view/search_screen.dart';
 import 'package:weatherly/view/widget/custom_degree_item.dart';
 import 'package:weatherly/view/widget/loading_.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+   late WeatherEntity? weather;
+
+  @override
   Widget build(BuildContext context) {
-    WeatherEntity? weather;
-    return BlocConsumer<WeatherCubit, WeatherState>(
+    return BlocConsumer<CurrentWeatherCubit, CurrentWeatherState>(
       listener: (context, state) {
         if (state is CurrentWeatherSuccess) {
           weather = state.weatherEntity;
@@ -37,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                       Text(state.error),
                       ElevatedButton(
                         onPressed: () {
-                          BlocProvider.of<WeatherCubit>(context).getWeatherForCurrentLocation();  
+                          BlocProvider.of<CurrentWeatherCubit>(context).getWeatherForCurrentLocation();  
                         }
                         , child: Text('Retry')
                       )
@@ -213,7 +218,7 @@ class HomeScreen extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => DaysScreen(),
+                                          builder: (context) => DaysScreen(weather: weather!,),
                                         ),
                                       );
                                     },

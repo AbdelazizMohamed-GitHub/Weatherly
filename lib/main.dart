@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weatherly/core/cubits/weather_cubit/weather_cubit.dart';
+import 'package:weatherly/cubits/city_weather_cubit/city_weather_cubit.dart';
+import 'package:weatherly/cubits/current_weather_cubit/current_weather_cubit.dart';
 import 'package:weatherly/obserer.dart';
 import 'package:weatherly/view/home_screen.dart';
 import 'package:weatherly/view/search_screen.dart';
-import 'package:weatherly/view/widget/loading_.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,12 +19,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WeatherCubit()..getWeatherForCurrentLocation(),
+      create: (context) =>
+          CityWeatherCubit(),
       child: MaterialApp(
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: const HomeScreen(),
+        home: const SearchScreen(),
       ),
     );
   }

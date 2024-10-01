@@ -1,43 +1,25 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weatherly/core/cubits/weather_cubit/weather_cubit.dart';
-import 'package:weatherly/core/cubits/weather_cubit/weather_state.dart';
+
+import 'package:weatherly/cubits/current_weather_cubit/current_weather_cubit.dart';
+import 'package:weatherly/cubits/current_weather_cubit/current_weather_state.dart';
 import 'package:weatherly/core/utils/app_color.dart';
 import 'package:weatherly/model/weather_entity.dart';
 
 class DaysScreen extends StatelessWidget {
-  const DaysScreen({super.key});
-
+  const DaysScreen({
+    super.key,
+   required this.weather,
+  });
+final WeatherEntity weather;
   @override
   Widget build(BuildContext context) {
-    WeatherEntity? weather;
-    return BlocConsumer<WeatherCubit, WeatherState>(
-      listener: (context, state) {
-        if (state is CurrentWeatherSuccess) {
-          weather = state.weatherEntity;
-        }
-      },
-      builder: (context, state) {
-        return Scaffold(
-          body: state is CurrentWeatherLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : state is CurrentWeatherError
-                  ? Column(mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(state.error),
-                      ElevatedButton(
-                        onPressed: () {
-                          BlocProvider.of<WeatherCubit>(context).getWeatherForCurrentLocation();  
-                        }
-                        , child: Text('Retry')
-                      )
-                    ],
-                  )
-                  : SafeArea(
+    
+    return Scaffold(
+          body: SafeArea(
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -202,7 +184,6 @@ class DaysScreen extends StatelessWidget {
                       ),
                     ),
         );
-      },
-    );
-  }
+      }
+  
 }

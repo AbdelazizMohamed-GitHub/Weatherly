@@ -121,68 +121,70 @@ class Loading extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: SizedBox(
-              height: 150,
-              child: ListView.separated(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 24,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    width: 10,
-                  );
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    padding: const EdgeInsets.all(10),
-                    width: 130,
-                    decoration: ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: SizedBox(
+                height: 150,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 24,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      width: 10,
+                    );
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      padding: const EdgeInsets.all(10),
+                      width: 130,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "time",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            height: 0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Expanded(
-                          child: Container(
-                            width: 100,
-                            height: 100,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          'temp°C',
-                          style: TextStyle(
+                         const Text(
+                            "time",
+                            style:  TextStyle(
                               color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              height: 0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            'temp°C',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
