@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weatherly/core/utils/app_color.dart';
 import 'package:weatherly/core/utils/app_image.dart';
-
+import 'package:weatherly/core/utils/funtion.dart';
 import 'package:weatherly/view/home_screen.dart';
 import 'package:weatherly/view/widget/custom_splash_button.dart';
 
@@ -53,7 +53,19 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 50),
-              const CustomSplashButton(),
+              CustomSplashButton(
+                ontap: () async {
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return const HomeScreen();
+                      }),
+                    );
+                    login();
+                  };
+                },
+              ),
             ],
           ),
         ),
