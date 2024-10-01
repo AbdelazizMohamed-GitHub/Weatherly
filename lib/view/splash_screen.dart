@@ -4,6 +4,7 @@ import 'package:weatherly/core/utils/app_color.dart';
 import 'package:weatherly/core/utils/app_image.dart';
 
 import 'package:weatherly/view/home_screen.dart';
+import 'package:weatherly/view/widget/custom_splash_button.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -52,26 +53,7 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 50),
-              MaterialButton(
-                shape:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return const HomeScreen();
-                    }),
-                  );
-                },
-                color: AppColor.pColor,
-                textColor: Colors.white,
-                minWidth: 200,
-                height: 50,
-                child: const Text(
-                  'Get Started',
-                  style: TextStyle(fontSize: 18),
-                ),
-              )
+              const CustomSplashButton(),
             ],
           ),
         ),

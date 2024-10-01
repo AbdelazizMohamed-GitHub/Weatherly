@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weatherly/core/service/weather_service.dart';
+import 'package:weatherly/core/utils/funtion.dart';
 import 'package:weatherly/cubits/city_weather_cubit/city_weather_cubit.dart';
 import 'package:weatherly/view/widget/custom_error_widget.dart';
 import 'package:weatherly/view/widget/custom_sccess_body.dart';
@@ -11,20 +13,32 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String city = '';
     return BlocProvider(
-      create: (context) => CityWeatherCubit(),
+      create: (context) => CityWeatherCubit(weatherService: getIt.get<WeatherService>()),
       child: Scaffold(
         body: SafeArea(
           child: Column(
             children: [
-              const CustomSearch(),
+              CustomSearch(
+                onChanged: (String value) {
+                  city = value;
+                },
+              ),
               const SizedBox(height: 10),
               BlocBuilder<CityWeatherCubit, CityWeatherState>(
                 builder: (context, state) {
                   return state is CityWeatherLoading
                       ? const Expanded(child: CustomLoading())
                       : state is CityWeatherError
-                          ? CustomError(onPressed: () {}, text: state.error)
+                          ? CustomError(
+                              onPressed: () {
+                                if (city.isNotEmpty) {
+                                  BlocProvider.of<CityWeatherCubit>(context)
+                                      .getCityWeather(cityName: city);
+                                }
+                              },
+                              text: state.error)
                           : state is CityWeatherSuccess
                               ? Expanded(
                                   child: CustomSccessBody(

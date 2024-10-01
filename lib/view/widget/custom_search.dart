@@ -5,8 +5,8 @@ import 'package:weatherly/cubits/city_weather_cubit/city_weather_cubit.dart';
 import 'package:weatherly/view/widget/custom_text_form.dart';
 
 class CustomSearch extends StatefulWidget {
-  const CustomSearch({super.key});
-
+  const CustomSearch({super.key, required this.onChanged});
+final ValueChanged<String> onChanged;
   @override
   State<CustomSearch> createState() => _CustomSearchState();
 }
@@ -31,7 +31,9 @@ class _CustomSearchState extends State<CustomSearch> {
               )),
           Expanded(
             child: CustomTextForm(
-              onChanged: (value) {},
+              onChanged: (value) {
+                widget.onChanged(value);
+              },
               text: 'City',
               textController: _searchController,
               textType: TextInputType.text,
@@ -39,9 +41,9 @@ class _CustomSearchState extends State<CustomSearch> {
                   onPressed: () {
                     final city = _searchController.text.trim();
                     if (city.isNotEmpty) {
+                      FocusScope.of(context).unfocus();
                       BlocProvider.of<CityWeatherCubit>(context)
                           .getCityWeather(cityName: city);
-                      FocusScope.of(context).unfocus();
                     }
                   },
                   icon: const Icon(Icons.search)),
