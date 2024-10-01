@@ -18,15 +18,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          CityWeatherCubit(),
-      child: MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-        ),
-        home: const SearchScreen(),
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
       ),
+      home: const HomeScreen(),
     );
   }
 }

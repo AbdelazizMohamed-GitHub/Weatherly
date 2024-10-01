@@ -5,8 +5,8 @@ import 'package:weatherly/core/utils/app_color.dart';
 import 'package:weatherly/core/utils/app_image.dart';
 import 'package:weatherly/view/widget/custom_degree_item.dart';
 
-class Loading extends StatelessWidget {
-  const Loading({super.key});
+class CustomLoading extends StatelessWidget {
+  const CustomLoading({super.key});
 
   @override
   Widget build(BuildContext context) {
