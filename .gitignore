@@ -1,3 +1,6 @@
+# .gitignore
+.env
+
 # Miscellaneous
 *.class
 *.log
