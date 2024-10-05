@@ -1,5 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// ignore_for_file: prefer_const_constructors
+
 
 import 'package:flutter/material.dart';
 
@@ -21,9 +20,9 @@ class DaysScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: const [
+              colors: [
                 AppColor.sColor, // Lighter blue (sky blue)
                 AppColor.pColor, // Darker blue (ocean blue)
               ],
@@ -37,11 +36,11 @@ class DaysScreen extends StatelessWidget {
             child: Column(
               children: [
                 CustomDaysHeader(weather: weather),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 CustomDaysCurrentDay(weather: weather),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 CustomDaysList(weather: weather)

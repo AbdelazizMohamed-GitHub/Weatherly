@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherly/core/utils/funtion.dart';
-import 'package:weatherly/obserer.dart';
 import 'package:weatherly/view/home_screen.dart';
 import 'package:weatherly/view/splash_screen.dart';
 
@@ -9,7 +7,6 @@ void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   
-  Bloc.observer = Observer();
   runApp(const MyApp());
 }
 

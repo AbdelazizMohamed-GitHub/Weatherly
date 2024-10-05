@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:weatherly/model/weather_entity.dart';
@@ -19,7 +18,7 @@ class CustomDaysList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: weather.days!.length - 1,
         separatorBuilder: (BuildContext context, int index) {
-          return Divider();
+          return const Divider();
         },
         itemBuilder: (BuildContext context, int index) {
           return Row(
@@ -34,7 +33,7 @@ class CustomDaysList extends StatelessWidget {
               ),
               Text(
                 '${weather.days![index + 1].avgTemp}°',
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 28.0),
@@ -43,14 +42,14 @@ class CustomDaysList extends StatelessWidget {
                 children: [
                   Text(
                     '${weather.days![index + 1].status}',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                         fontSize: 24.0),
                   ),
                   Text(
                     '${weather.days![index + 1].date}',
-                    style: TextStyle(color: Colors.black, fontSize: 14.0),
+                    style: const TextStyle(color: Colors.black, fontSize: 14.0),
                   )
                 ],
               )

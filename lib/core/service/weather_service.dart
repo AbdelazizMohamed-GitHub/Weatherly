@@ -5,14 +5,14 @@ import 'package:weatherly/model/weather_mapper.dart';
 import 'package:weatherly/model/weather_model.dart';
 
 class WeatherService {
- final Dio dio ;
+  final Dio dio;
   String baseUrl = "http://api.weatherapi.com/v1";
-  
 
   WeatherService({required this.dio});
 
   Future<WeatherEntity> getWeather(String city) async {
-    String url = "$baseUrl/forecast.json?key=${ Env.apiKey}&q=$city&days=7&lang=ar";
+    String url =
+        "$baseUrl/forecast.json?key=${Env.apiKey}&q=$city&days=7&lang=ar";
     var response = await dio.get(url);
     if (response.statusCode == 200) {
       return WeatherMapper.mapModelToEntity(
@@ -22,9 +22,10 @@ class WeatherService {
     }
   }
 
-  Future<WeatherEntity> getWeatherForCurrentLocation( {required double latitude,required double longitude})async {
-
- String url = "$baseUrl/forecast.json?key=${ Env.apiKey}&q=$latitude,$longitude&days=7&lang=ar";
+  Future<WeatherEntity> getWeatherForCurrentLocation(
+      {required double latitude, required double longitude}) async {
+    String url =
+        "$baseUrl/forecast.json?key=${Env.apiKey}&q=$latitude,$longitude&days=7&lang=ar";
     var response = await dio.get(url);
     if (response.statusCode == 200) {
       return WeatherMapper.mapModelToEntity(
@@ -32,6 +33,5 @@ class WeatherService {
     } else {
       throw Exception('Failed to load weather');
     }
-
   }
 }

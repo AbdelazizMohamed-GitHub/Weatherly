@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:weatherly/model/weather_entity.dart';
@@ -6,10 +5,10 @@ import 'package:weatherly/view/search_screen.dart';
 
 class CustomHomeHeader extends StatelessWidget {
   const CustomHomeHeader({
-    Key? key,
+    super.key,
     required this.weather,
     required this.isHome,
-  }) : super(key: key);
+  });
   final WeatherEntity weather;
   final bool isHome;
   @override
@@ -40,7 +39,7 @@ class CustomHomeHeader extends StatelessWidget {
               ),
             );
           },
-        ):Spacer(flex: 1,),
+        ):const Spacer(flex: 1,),
         const SizedBox(width: 10),
       ],
     );

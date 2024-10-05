@@ -15,7 +15,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          CurrentWeatherCubit(weatherService: getIt.get<WeatherService>())..getWeatherForCurrentLocation(),
+          CurrentWeatherCubit(weatherService: getIt.get<WeatherService>())
+            ..getWeatherForCurrentLocation(),
       child: BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(
         builder: (context, state) {
           return Scaffold(

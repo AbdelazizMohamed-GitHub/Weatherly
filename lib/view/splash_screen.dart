@@ -54,16 +54,15 @@ class SplashScreen extends StatelessWidget {
               ),
               const SizedBox(height: 50),
               CustomSplashButton(
-                ontap: () async {
-                  () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return const HomeScreen();
-                      }),
-                    );
-                    login();
-                  };
+                onPressed: () {
+                
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return const HomeScreen();
+                    }),
+                  );
+                  login();
                 },
               ),
             ],

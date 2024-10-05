@@ -15,7 +15,8 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String city = '';
     return BlocProvider(
-      create: (context) => CityWeatherCubit(weatherService: getIt.get<WeatherService>()),
+      create: (context) =>
+          CityWeatherCubit(weatherService: getIt.get<WeatherService>()),
       child: Scaffold(
         body: SafeArea(
           child: Column(

@@ -1,6 +1,5 @@
 part of 'city_weather_cubit.dart';
 
-@immutable
 sealed class CityWeatherState {}
 
 final class CityWeatherInitial extends CityWeatherState {}

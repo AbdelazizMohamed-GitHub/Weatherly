@@ -15,11 +15,11 @@ final String message;
    factory DioExceptions.fromDioError( DioError dioError) {  
     switch (dioError.type) {
       case DioErrorType.connectionTimeout:
-    return   DioExceptions( "Connection timeout. Please try again later.");
+    return   DioExceptions( "Please try again later.");
       case DioErrorType.sendTimeout:
-      return  DioExceptions( "Send timeout. Please try again later.");
+      return  DioExceptions( "Please try again later.");
       case DioErrorType.receiveTimeout:
-      return  DioExceptions( "Receive timeout. Please try again later.");
+      return  DioExceptions( "Please try again later.");
       case DioErrorType.badResponse:
       return  DioExceptions( handleResponseError(dioError.response!.statusCode));
        
@@ -27,7 +27,7 @@ final String message;
       "Request to the server was cancelled.";
         break;
       case DioErrorType.connectionError:
-      return  DioExceptions( "Network issue. Please check your connection.");
+      return  DioExceptions( "Please check your connection.");
      
       default:
     return    DioExceptions( "Unexpected error occurred.");
