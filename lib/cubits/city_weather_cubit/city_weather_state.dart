@@ -14,3 +14,13 @@ class CityWeatherError extends CityWeatherState{
 
   CityWeatherError({required this.error});
 }
+
+class FetchRecommendedLocationLoading extends CityWeatherState{}
+
+class FetchRecommendedLocationSuccess extends CityWeatherState{
+  final List<String> suggestedPlaces;
+
+  FetchRecommendedLocationSuccess({required this.suggestedPlaces});
+}
+
+

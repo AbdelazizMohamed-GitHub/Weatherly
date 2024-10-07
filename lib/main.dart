@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:weatherly/core/utils/funtion.dart';
 import 'package:weatherly/view/home_screen.dart';
+import 'package:weatherly/view/search_screen.dart';
 import 'package:weatherly/view/splash_screen.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
-  
+
   runApp(const MyApp());
 }
 
@@ -37,10 +38,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home:  _isLoggedIn? const HomeScreen():const SplashScreen(),
+      home: _isLoggedIn ? const SearchScreen() : const SplashScreen(),
     );
   }
 }

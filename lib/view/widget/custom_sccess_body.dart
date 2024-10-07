@@ -60,9 +60,10 @@ class CustomSccessBody extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Expanded(
-            child: CustomHourDetails(weather: weather),
-          ),
+          isHome
+              ? Expanded(child: CustomHourDetails(weather: weather))
+              : SizedBox(
+                  height: 180, child: CustomHourDetails(weather: weather)),
           const SizedBox(
             height: 40,
           ),

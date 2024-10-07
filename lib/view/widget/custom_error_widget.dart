@@ -6,12 +6,14 @@ class CustomError extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(text),
-        TextButton(onPressed: onPressed, child: const Text('Retry'))
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(child: Text(text)),
+          TextButton(onPressed: onPressed, child: const Text('Retry'))
+        ],
+      ),
     );
   }
 }

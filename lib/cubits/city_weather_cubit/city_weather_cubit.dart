@@ -8,21 +8,39 @@ import 'package:weatherly/model/weather_entity.dart';
 part 'city_weather_state.dart';
 
 class CityWeatherCubit extends Cubit<CityWeatherState> {
-  CityWeatherCubit(
-    {required this.weatherService}
-  ) : super(CityWeatherInitial());
+  CityWeatherCubit({required this.weatherService})
+      : super(CityWeatherInitial());
   final WeatherService weatherService;
-    void getCityWeather({required String cityName}) async {
+  void getCityWeather({required String cityName}) async {
     try {
       emit(CityWeatherLoading());
       WeatherEntity weather = await weatherService.getWeather(cityName);
       emit(CityWeatherSuccess(weatherEntity: weather));
     } catch (e) {
       if (e is DioException) {
-
-        return emit(CityWeatherError(error: DioExceptions.fromDioError(e).message));
+        return emit(
+            CityWeatherError(error: DioExceptions.fromDioError(e).message));
       }
       emit(CityWeatherError(error: "Something went wrong"));
     }
+  }
+
+  Future<void> getRecommendedPlace(
+      {required String cityName})async {
+    emit(FetchRecommendedLocationLoading());
+  try {
+     await weatherService
+        .fetchRecommendedPlaces(city: cityName,)
+        .then((value) {
+          emit(FetchRecommendedLocationSuccess(suggestedPlaces: value));
+        });
+  } catch (e) {
+    // if (e is DioException) {
+    //   return emit(
+    //       CityWeatherError(error: DioExceptions.fromDioError(e).message));
+    // }
+    // emit(CityWeatherError(error: e.toString()));
+    
+  }
   }
 }
