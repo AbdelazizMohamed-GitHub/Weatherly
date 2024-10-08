@@ -12,7 +12,7 @@ class CustomSearch extends StatefulWidget {
 }
 
 class _CustomSearchState extends State<CustomSearch> {
-  final _searchController = TextEditingController();
+  String city='';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,26 +35,28 @@ class _CustomSearchState extends State<CustomSearch> {
               textDirection: TextDirection.rtl,
               child: CustomTextForm(
                 onFieldSubmitted: (p0) {
+                
                   FocusScope.of(context).unfocus();
-                  final city = _searchController.text.trim();
-                  if (city.isNotEmpty) {
+                
+                  if (p0.isNotEmpty) {
                     BlocProvider.of<CityWeatherCubit>(context)
-                        .getCityWeather(cityName: city);
+                        .getCityWeather(cityName: p0.trim());
                   }
                 },
                 onChanged: (value) {
                   widget.onChanged(value);
+                  city = value;
                 },
                 text: 'ابحث عن مدينتك',
-                textController: _searchController,
+             
                 textType: TextInputType.text,
                 iconButton: IconButton(
                     onPressed: () {
-                      final city = _searchController.text.trim();
+                    
                       if (city.isNotEmpty) {
                         FocusScope.of(context).unfocus();
                         BlocProvider.of<CityWeatherCubit>(context)
-                            .getCityWeather(cityName: city);
+                            .getCityWeather(cityName: city.trim());
                       }
                     },
                     icon: const Icon(Icons.search)),

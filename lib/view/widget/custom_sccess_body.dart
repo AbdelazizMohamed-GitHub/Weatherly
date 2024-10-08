@@ -33,7 +33,7 @@ class CustomSccessBody extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SizedBox(height: 20,),
+         const SizedBox(height: 20,),
           CustomHeader(
             weather: weather,
             isHome: isHome,

@@ -34,12 +34,9 @@ class CityWeatherCubit extends Cubit<CityWeatherState> {
         .then((value) {
           emit(FetchRecommendedLocationSuccess(suggestedPlaces: value));
         });
+  // ignore: empty_catches
   } catch (e) {
-    // if (e is DioException) {
-    //   return emit(
-    //       CityWeatherError(error: DioExceptions.fromDioError(e).message));
-    // }
-    // emit(CityWeatherError(error: e.toString()));
+   
     
   }
   }

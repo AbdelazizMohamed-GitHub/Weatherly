@@ -31,7 +31,14 @@ class HomeScreen extends StatelessWidget {
                           },
                           text: state.error)
                       : state is CurrentWeatherSuccess
-                          ? CustomSccessBody(weather: state.weatherEntity)
+                          ? RefreshIndicator(
+                              onRefresh: () {
+                                return BlocProvider.of<CurrentWeatherCubit>(
+                                        context)
+                                    .getWeatherForCurrentLocation();
+                              },
+                              child: CustomSccessBody(
+                                  weather: state.weatherEntity))
                           : const SizedBox(),
             ),
           );

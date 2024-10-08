@@ -5,12 +5,10 @@ class CustomTextForm extends StatelessWidget {
   const CustomTextForm({
     super.key,
     required this.text,
-    required this.textController,
     required this.textType, required this.iconButton, this.onChanged, this.onFieldSubmitted,
 
   });
   final String text;
-  final TextEditingController? textController;
   final TextInputType textType;
   final IconButton iconButton;
   final Function(String)? onChanged;
@@ -19,7 +17,6 @@ class CustomTextForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(onChanged:onChanged ,autofocus: true,
       keyboardType: textType,
-      controller: textController,
       textInputAction: TextInputAction.search,
       onFieldSubmitted:onFieldSubmitted ,
       decoration: InputDecoration(suffixIcon: iconButton,
