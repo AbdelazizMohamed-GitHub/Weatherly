@@ -31,9 +31,7 @@ class CustomDegreeItem extends StatelessWidget {
         Text(
           title,
           style: const TextStyle(
-            color: Colors.black,
-            fontSize: 12,
-          ),
+              color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
         )
       ],
     );

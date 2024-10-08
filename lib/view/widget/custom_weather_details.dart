@@ -16,19 +16,19 @@ class CustomWetherDetails extends StatelessWidget {
         CustomDegreeItem(
             image: AppImage.humidity,
             number: '${weather.humidity}%',
-            title: 'Humidity'),
+            title: 'الرطوبه'),
         CustomDegreeItem(
             image: AppImage.wind,
             number: '${weather.windSpeed} km/h',
-            title: 'Wind'),
+            title: 'الرياح'),
         CustomDegreeItem(
             image: AppImage.speedometer,
             number: '${weather.airPresure}',
-            title: 'Air Pressure'),
+            title: 'ضغط الهواء'),
         CustomDegreeItem(
             image: AppImage.visibility,
             number: '${weather.visibility}km',
-            title: 'Visibility'),
+            title: 'الرؤية'),
       ]
     );
   }

@@ -13,11 +13,6 @@ class CustomShowNextDays extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Text(
-          'Today',
-          style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-        ),
         const Spacer(),
         GestureDetector(
           onTap: () {
@@ -33,7 +28,7 @@ class CustomShowNextDays extends StatelessWidget {
           child: const Row(
             children: [
               Text(
-                'See Next 7 Days',
+                'عرض الايام المتاحة',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,

@@ -22,7 +22,7 @@ class CustomHourDetails extends StatelessWidget {
         },
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(vertical: 20),
             width: 130,
             decoration: ShapeDecoration(
               color: Colors.white,

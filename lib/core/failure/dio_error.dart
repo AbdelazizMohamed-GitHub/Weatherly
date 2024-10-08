@@ -15,25 +15,25 @@ final String message;
    factory DioExceptions.fromDioError( DioError dioError) {  
     switch (dioError.type) {
       case DioErrorType.connectionTimeout:
-    return   DioExceptions( "Please try again later.");
+    return   DioExceptions( "يوجد مشكلة في الاتصال");
       case DioErrorType.sendTimeout:
-      return  DioExceptions( "Please try again later.");
+      return  DioExceptions( "برجاء المحاولة مرة اخرى");
       case DioErrorType.receiveTimeout:
-      return  DioExceptions( "Please try again later.");
+      return  DioExceptions( "برجاء المحاولة مرة اخرى");
       case DioErrorType.badResponse:
       return  DioExceptions( handleResponseError(dioError.response!.statusCode));
        
       case DioErrorType.cancel:
-      "Request to the server was cancelled.";
-        break;
+      
+      return  DioExceptions( "تم إلغاء الطلب إلى خادم API");
       case DioErrorType.connectionError:
-      return  DioExceptions( "Please check your connection.");
+      return  DioExceptions( "برجاء التحقق من الاتصال بالانترنت");
      
       default:
-    return    DioExceptions( "Unexpected error occurred.");
+    return    DioExceptions( "خطاء غير معروف");
        
     }
-    throw Exception(dioError.message);
+   
   }
 
 

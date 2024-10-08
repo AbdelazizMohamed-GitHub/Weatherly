@@ -6,18 +6,22 @@ class CustomTextForm extends StatelessWidget {
     super.key,
     required this.text,
     required this.textController,
-    required this.textType, required this.iconButton, this.onChanged,
+    required this.textType, required this.iconButton, this.onChanged, this.onFieldSubmitted,
+
   });
   final String text;
   final TextEditingController? textController;
   final TextInputType textType;
   final IconButton iconButton;
   final Function(String)? onChanged;
+  final Function(String)? onFieldSubmitted;
   @override
   Widget build(BuildContext context) {
-    return TextFormField(onChanged:onChanged ,
+    return TextFormField(onChanged:onChanged ,autofocus: true,
       keyboardType: textType,
       controller: textController,
+      textInputAction: TextInputAction.search,
+      onFieldSubmitted:onFieldSubmitted ,
       decoration: InputDecoration(suffixIcon: iconButton,
         contentPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         filled: true,

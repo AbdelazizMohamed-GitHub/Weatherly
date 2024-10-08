@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:weatherly/model/weather_entity.dart';
 import 'package:weatherly/view/search_screen.dart';
 
-class CustomHomeHeader extends StatelessWidget {
-  const CustomHomeHeader({
+class CustomHeader extends StatelessWidget {
+  const CustomHeader({
     super.key,
     required this.weather,
     required this.isHome,
@@ -16,8 +16,17 @@ class CustomHomeHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        isHome
+            ? const Spacer(flex: 1)
+            : Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
         const Spacer(
-          flex: 3,
+          flex: 2,
         ),
         Column(
           children: [
@@ -29,17 +38,21 @@ class CustomHomeHeader extends StatelessWidget {
         const Spacer(
           flex: 2,
         ),
-     isHome?   IconButton(
-          padding: EdgeInsets.zero,
-          icon: const Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const SearchScreen(),
+        isHome
+            ? IconButton(
+                padding: EdgeInsets.zero,
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const SearchScreen(),
+                    ),
+                  );
+                },
+              )
+            : const Spacer(
+                flex: 1,
               ),
-            );
-          },
-        ):const Spacer(flex: 1,),
         const SizedBox(width: 10),
       ],
     );

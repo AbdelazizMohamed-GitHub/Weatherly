@@ -33,7 +33,8 @@ class CustomSccessBody extends StatelessWidget {
       ),
       child: Column(
         children: [
-          CustomHomeHeader(
+          SizedBox(height: 20,),
+          CustomHeader(
             weather: weather,
             isHome: isHome,
           ),
@@ -51,21 +52,16 @@ class CustomSccessBody extends StatelessWidget {
             ),
             child: CustomWetherDetails(weather: weather),
           ),
-          isHome
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: CustomShowNextDays(weather: weather),
-                )
-              : const SizedBox(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: CustomShowNextDays(weather: weather),
+          ),
           const SizedBox(
             height: 10,
           ),
-          isHome
-              ? Expanded(child: CustomHourDetails(weather: weather))
-              : SizedBox(
-                  height: 180, child: CustomHourDetails(weather: weather)),
+          Expanded(child: CustomHourDetails(weather: weather)),
           const SizedBox(
-            height: 40,
+            height: 20,
           ),
         ],
       ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatherly/core/utils/funtion.dart';
 import 'package:weatherly/view/home_screen.dart';
-import 'package:weatherly/view/search_screen.dart';
 import 'package:weatherly/view/splash_screen.dart';
 
 void main() async {
@@ -42,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: _isLoggedIn ? const SearchScreen() : const SplashScreen(),
+      home: _isLoggedIn ? const HomeScreen() : const SplashScreen(),
     );
   }
 }

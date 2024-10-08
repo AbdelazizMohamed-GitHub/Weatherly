@@ -18,7 +18,7 @@ class WeatherService {
       return WeatherMapper.mapModelToEntity(
           WeatherModel.fromJson(response.data));
     } else {
-      throw Exception('Failed to load weather');
+      throw Exception('فشل في التحميل');
     }
   }
 
@@ -31,7 +31,7 @@ class WeatherService {
       return WeatherMapper.mapModelToEntity(
           WeatherModel.fromJson(response.data));
     } else {
-      throw Exception('Failed to load weather');
+      throw Exception('فشل في التحميل');
     }
   }
 
@@ -54,8 +54,5 @@ class WeatherService {
   }
 
   // عند اختيار المستخدم اقتراحًا
-  void _onPlaceSelected(String place) {
-    // المتابعة لجلب بيانات الطقس للمكان المختار
-    print('المكان المختار: $place');
-  }
+ 
 }
