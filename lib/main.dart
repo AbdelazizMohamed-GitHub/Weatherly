@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: !_isLoggedIn ? const SplashScreen() : const SplashScreen(),
+      home: _isLoggedIn ? const HomeScreen() : const SplashScreen(),
     );
   }
 }
