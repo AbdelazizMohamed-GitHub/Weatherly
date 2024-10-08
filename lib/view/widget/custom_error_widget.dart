@@ -10,8 +10,17 @@ class CustomError extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(child: Text(text)),
-          TextButton(onPressed: onPressed, child: const Text('Retry'))
+          Center(
+              child: Text(
+            text,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          )),
+          TextButton(
+              onPressed: onPressed,
+              child: const Text(
+                'ءاعادة المحاولة',
+                style: TextStyle(fontSize: 16),
+              ))
         ],
       ),
     );

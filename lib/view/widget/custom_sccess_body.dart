@@ -38,19 +38,21 @@ class CustomSccessBody extends StatelessWidget {
             weather: weather,
             isHome: isHome,
           ),
-          SizedBox(
-            height: 250,
+          Expanded(
+          flex: 2,
             child: CustomSweperList(weather: weather),
           ),
-          Container(
-            margin: const EdgeInsets.all(20),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            height: 120,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+          Expanded(flex: 1,
+            child: Container(
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+             
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: CustomWetherDetails(weather: weather),
             ),
-            child: CustomWetherDetails(weather: weather),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -59,7 +61,8 @@ class CustomSccessBody extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Expanded(child: CustomHourDetails(weather: weather)),
+          Expanded(flex: 2,
+            child: CustomHourDetails(weather: weather)),
           const SizedBox(
             height: 20,
           ),

@@ -17,7 +17,7 @@ class CustomSplashButton extends StatelessWidget {
       minWidth: 200,
       height: 50,
       child: const Text(
-        'Get Started',
+        'ابدء التطبيق',
         style: TextStyle(fontSize: 18),
       ),
     );

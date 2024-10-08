@@ -12,23 +12,16 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColor.sColor, // Lighter blue (sky blue)
-              AppColor.pColor, // Darker blue (ocean blue)
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        decoration: const BoxDecoration(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Weather Icon - Replace with an asset image if you have one
-              SvgPicture.asset(
+              Image.asset(
+                fit: BoxFit.cover,
                 AppImage.weatherIcon,
                 height: 300,
                 width: 300,
@@ -36,26 +29,25 @@ class SplashScreen extends StatelessWidget {
               const SizedBox(height: 30),
               // App Title
               const Text(
-                'Weather Now',
+                'طقسي',
                 style: TextStyle(
                   fontSize: 36.0,
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 10),
               // Tagline
               const Text(
-                'Your Forecast, Simplified',
+                'موقع الطقس الخاص بك',
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.white70,
+                  color: Colors.black87,
                 ),
               ),
               const SizedBox(height: 50),
               CustomSplashButton(
                 onPressed: () {
-                
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) {

@@ -21,23 +21,21 @@ class CityWeatherCubit extends Cubit<CityWeatherState> {
         return emit(
             CityWeatherError(error: DioExceptions.fromDioError(e).message));
       }
-      emit(CityWeatherError(error: "Something went wrong"));
+      emit(CityWeatherError(error: "برجاء المحاولة مرة اخرى"));
     }
   }
 
-  Future<void> getRecommendedPlace(
-      {required String cityName})async {
+  Future<void> getRecommendedPlace({required String cityName}) async {
     emit(FetchRecommendedLocationLoading());
-  try {
-     await weatherService
-        .fetchRecommendedPlaces(city: cityName,)
-        .then((value) {
-          emit(FetchRecommendedLocationSuccess(suggestedPlaces: value));
-        });
-  // ignore: empty_catches
-  } catch (e) {
-   
-    
-  }
+    try {
+      await weatherService
+          .fetchRecommendedPlaces(
+        city: cityName,
+      )
+          .then((value) {
+        emit(FetchRecommendedLocationSuccess(suggestedPlaces: value));
+      });
+      // ignore: empty_catches
+    } catch (e) {}
   }
 }

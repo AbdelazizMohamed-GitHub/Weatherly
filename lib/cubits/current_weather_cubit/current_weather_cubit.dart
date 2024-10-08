@@ -1,5 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// ignore_for_file: deprecated_member_use, avoid_print
+
 
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,13 +19,13 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
     try {
       emit(CurrentWeatherLoading());
       Position position = await LocationService.getCurrentLocation();
-      print("latitude: ${position.latitude} longitude: ${position.longitude}");
+     
       WeatherEntity weather = await weatherService
           .getWeatherForCurrentLocation(
               latitude: position.latitude, longitude: position.longitude);
       emit(CurrentWeatherSuccess(weatherEntity: weather));
     } catch (e) {
-      print("11111111111111${e.toString()}");
+     
       if (e is DioException) {
         return emit(
             CurrentWeatherError(error: DioExceptions.fromDioError(e).message));
