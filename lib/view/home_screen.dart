@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:weatherly/core/service/weather_service.dart';
 import 'package:weatherly/core/utils/funtion.dart';
 import 'package:weatherly/cubits/current_weather_cubit/current_weather_cubit.dart';
@@ -25,9 +26,14 @@ class HomeScreen extends StatelessWidget {
                   ? const CustomLoading()
                   : state is CurrentWeatherError
                       ? CustomError(
-                          onPressed: () {
-                            BlocProvider.of<CurrentWeatherCubit>(context)
-                                .getWeatherForCurrentLocation();
+                          onPressed: () async {
+                            LocationPermission? permission;
+                            if (permission == LocationPermission.denied) {
+                              permission = await Geolocator.requestPermission();
+                            } else {
+                              BlocProvider.of<CurrentWeatherCubit>(context)
+                                  .getWeatherForCurrentLocation();
+                            }
                           },
                           text: state.error)
                       : state is CurrentWeatherSuccess

@@ -12,7 +12,7 @@ class CustomSearch extends StatefulWidget {
 }
 
 class _CustomSearchState extends State<CustomSearch> {
-  String city='';
+  String city = '';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,9 +35,8 @@ class _CustomSearchState extends State<CustomSearch> {
               textDirection: TextDirection.rtl,
               child: CustomTextForm(
                 onFieldSubmitted: (p0) {
-                
                   FocusScope.of(context).unfocus();
-                
+
                   if (p0.isNotEmpty) {
                     BlocProvider.of<CityWeatherCubit>(context)
                         .getCityWeather(cityName: p0.trim());
@@ -48,11 +47,9 @@ class _CustomSearchState extends State<CustomSearch> {
                   city = value;
                 },
                 text: 'ابحث عن مدينتك',
-             
                 textType: TextInputType.text,
                 iconButton: IconButton(
                     onPressed: () {
-                    
                       if (city.isNotEmpty) {
                         FocusScope.of(context).unfocus();
                         BlocProvider.of<CityWeatherCubit>(context)
@@ -62,6 +59,9 @@ class _CustomSearchState extends State<CustomSearch> {
                     icon: const Icon(Icons.search)),
               ),
             ),
+          ),
+          const SizedBox(
+            width: 10,
           ),
         ],
       ),

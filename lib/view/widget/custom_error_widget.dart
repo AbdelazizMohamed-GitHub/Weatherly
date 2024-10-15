@@ -11,9 +11,13 @@ class CustomError extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-              child: Text(
-            text,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              textAlign: TextAlign.center,
+              text,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
           )),
           TextButton(
               onPressed: onPressed,
