@@ -32,25 +32,46 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
     }
 
     try {
-      final weather = await weatherService.getWeatherForCurrentLocation(
+      final result = await weatherService.getCurrentLocationWeatherWithStatus(
         latitude: position.latitude,
         longitude: position.longitude,
       );
-      emit(CurrentWeatherSuccess(weatherEntity: weather));
+      emit(
+        CurrentWeatherSuccess(
+          weatherEntity: result.weather,
+          isOffline: result.isFromCache,
+        ),
+      );
     } catch (e) {
-      _emitError(e);
+      _emitError(e, isOffline: e is DioException && _isNetworkFailure(e));
     }
   }
 
-  void _emitError(Object error) {
+  void _emitError(Object error, {bool isOffline = false}) {
     if (error is DioException) {
       emit(
         CurrentWeatherError(
           error: DioExceptions.fromDioError(error).message,
+          isOffline: isOffline,
         ),
       );
       return;
     }
-    emit(CurrentWeatherError(error: error.toString()));
+    emit(CurrentWeatherError(error: error.toString(), isOffline: isOffline));
+  }
+
+  bool _isNetworkFailure(DioException error) {
+    switch (error.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+      case DioExceptionType.connectionError:
+      case DioExceptionType.unknown:
+        return true;
+      case DioExceptionType.badCertificate:
+      case DioExceptionType.badResponse:
+      case DioExceptionType.cancel:
+        return false;
+    }
   }
 }

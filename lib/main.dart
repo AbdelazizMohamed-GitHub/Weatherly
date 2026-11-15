@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weatherly/core/service/appsettingservise.dart';
+import 'package:weatherly/core/service/app_setting_servise.dart';
 import 'package:weatherly/core/utils/funtion.dart';
 import 'package:weatherly/view/home_screen.dart';
 import 'package:weatherly/view/splash_screen.dart';

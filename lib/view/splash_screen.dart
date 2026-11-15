@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:weatherly/core/service/appsettingservise.dart';
+import 'package:weatherly/core/service/app_setting_servise.dart';
 import 'package:weatherly/core/utils/app_color.dart';
 
 import 'package:weatherly/core/utils/app_image.dart';

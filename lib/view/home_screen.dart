@@ -6,6 +6,7 @@ import 'package:weatherly/core/utils/funtion.dart';
 import 'package:weatherly/cubits/current_weather_cubit/current_weather_cubit.dart';
 import 'package:weatherly/cubits/current_weather_cubit/current_weather_state.dart';
 import 'package:weatherly/view/widget/custom_error_widget.dart';
+import 'package:weatherly/view/widget/custom_no_internet_banner.dart';
 import 'package:weatherly/view/widget/custom_sccess_body.dart';
 import 'package:weatherly/view/widget/custom_loading.dart';
 
@@ -25,17 +26,29 @@ class HomeScreen extends StatelessWidget {
               child: state is CurrentWeatherLoading
                   ? const CustomLoading()
                   : state is CurrentWeatherError
-                      ? CustomError(
-                          onPressed: () async {
-                            LocationPermission? permission;
-                            if (permission == LocationPermission.denied) {
-                              permission = await Geolocator.requestPermission();
-                            } else {
-                              BlocProvider.of<CurrentWeatherCubit>(context)
-                                  .getWeatherForCurrentLocation();
-                            }
-                          },
-                          text: state.error)
+                      ? Column(
+                          children: [
+                            if (state.isOffline)
+                              const CustomNoInternetBanner(),
+                            Expanded(
+                              child: CustomError(
+                                onPressed: () async {
+                                  LocationPermission? permission;
+                                  if (permission ==
+                                      LocationPermission.denied) {
+                                    permission =
+                                        await Geolocator.requestPermission();
+                                  } else {
+                                    BlocProvider.of<CurrentWeatherCubit>(
+                                      context,
+                                    ).getWeatherForCurrentLocation();
+                                  }
+                                },
+                                text: state.error,
+                              ),
+                            ),
+                          ],
+                        )
                       : state is CurrentWeatherSuccess
                           ? RefreshIndicator(
                               onRefresh: () {
@@ -44,7 +57,10 @@ class HomeScreen extends StatelessWidget {
                                     .getWeatherForCurrentLocation();
                               },
                               child: CustomSccessBody(
-                                  weather: state.weatherEntity))
+                                weather: state.weatherEntity,
+                                isOffline: state.isOffline,
+                              ),
+                            )
                           : const SizedBox(),
             ),
           );

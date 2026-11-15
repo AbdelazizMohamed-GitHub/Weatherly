@@ -17,6 +17,16 @@ class WeatherService {
   Future<WeatherEntity> getWeatherForCurrentLocation({
     required double latitude,
     required double longitude,
+  }) async =>
+      (await getCurrentLocationWeatherWithStatus(
+        latitude: latitude,
+        longitude: longitude,
+      ))
+          .weather;
+
+  Future<WeatherFetchResult> getCurrentLocationWeatherWithStatus({
+    required double latitude,
+    required double longitude,
   }) async {
     try {
       final response = await dio.get(
@@ -34,14 +44,14 @@ class WeatherService {
         WeatherCacheService.currentLocationKey,
         weather,
       );
-      return weather;
+      return WeatherFetchResult(weather: weather, isFromCache: false);
     } on DioException catch (error) {
       if (!_isNetworkFailure(error)) {
         rethrow;
       }
       final cachedWeather = cacheService.getCurrentLocationWeather();
       if (cachedWeather != null) {
-        return cachedWeather;
+        return WeatherFetchResult(weather: cachedWeather, isFromCache: true);
       }
       rethrow;
     }
@@ -136,4 +146,14 @@ class WeatherService {
   }
 
   /// البحث عن المدن والأماكن المقترحة
+}
+
+class WeatherFetchResult {
+  const WeatherFetchResult({
+    required this.weather,
+    required this.isFromCache,
+  });
+
+  final WeatherEntity weather;
+  final bool isFromCache;
 }

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:weatherly/core/service/appsettingservise.dart';
+import 'package:weatherly/core/service/app_setting_servise.dart';
 
 import 'package:weatherly/core/service/weather_cache_service.dart';
 import 'package:weatherly/core/service/weather_service.dart';
