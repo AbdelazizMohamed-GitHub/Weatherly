@@ -31,12 +31,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   CustomSearch(
                     onChanged: (value) {
                       city = value;
-                      
 
                       BlocProvider.of<CityWeatherCubit>(context)
                           .getRecommendedPlace(cityName: city);
                     },
-                    
                   ),
                   state is FetchRecommendedLocationLoading && city.isNotEmpty
                       ? const Expanded(
@@ -44,45 +42,51 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: CircularProgressIndicator(),
                           ),
                         )
-                      : state is FetchRecommendedLocationSuccess
-                          ? state.suggestedPlaces.isNotEmpty
-                              ? Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: ListView.builder(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    shrinkWrap: true,
-                                    itemCount: state.suggestedPlaces.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          FocusScope.of(context).unfocus();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SearchResultScreen(
-                                                        city: state
-                                                                .suggestedPlaces[
-                                                            index]),
-                                              ));
-                                        },
-                                        child: ListTile(
-                                          title: Text(
-                                              state.suggestedPlaces[index]),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                              : const Center(
-                                  child: Text('اكمل البحث'),
-                                )
-                          : const Expanded(
+                      : state is FetchRecommendedLocationError
+                          ? Expanded(
                               child: Center(
-                              child: Text("البحث عن مكان"),
-                            ))
+                                child: Text(state.error),
+                              ),
+                            )
+                          : state is FetchRecommendedLocationSuccess
+                              ? state.suggestedPlaces.isNotEmpty
+                                  ? Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: ListView.builder(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        shrinkWrap: true,
+                                        itemCount: state.suggestedPlaces.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(context).unfocus();
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        SearchResultScreen(
+                                                            city: state
+                                                                    .suggestedPlaces[
+                                                                index]),
+                                                  ));
+                                            },
+                                            child: ListTile(
+                                              title: Text(
+                                                  state.suggestedPlaces[index]),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  : const Center(
+                                      child: Text('اكمل البحث'),
+                                    )
+                              : const Expanded(
+                                  child: Center(
+                                  child: Text("البحث عن مكان"),
+                                ))
                 ],
               ),
             );

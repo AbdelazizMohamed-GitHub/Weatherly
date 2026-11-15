@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatherly/model/weather_entity.dart';
+import 'package:weatherly/view/widget/custom_cached_weather_image.dart';
 
 class CustomHourDetails extends StatelessWidget {
   const CustomHourDetails({
@@ -22,7 +23,7 @@ class CustomHourDetails extends StatelessWidget {
         },
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 8),
             width: 130,
             decoration: ShapeDecoration(
               color: Colors.white,
@@ -49,8 +50,8 @@ class CustomHourDetails extends StatelessWidget {
                   height: 10,
                 ),
                 Expanded(
-                  child: Image.network(
-                    "https:${weather.hours![index].icon}",
+                  child: CustomCachedWeatherImage(
+                    imageUrl: weather.hours![index].icon,
                     fit: BoxFit.cover,
                   ),
                 ),

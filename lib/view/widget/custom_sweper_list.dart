@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:weatherly/core/utils/app_color.dart';
 import 'package:weatherly/model/weather_entity.dart';
+import 'package:weatherly/view/widget/custom_cached_weather_image.dart';
 
 class CustomSweperList extends StatelessWidget {
   const CustomSweperList({super.key, required this.weather});
@@ -30,8 +31,8 @@ class CustomSweperList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(height: 10),
-                    Image.network(
-                      "${weather!.days![index].icon}",
+                    CustomCachedWeatherImage(
+                      imageUrl: weather!.days![index].icon,
                       width: 150,
                       height: 120,
                       fit: BoxFit.cover,

@@ -1,58 +1,139 @@
 import 'package:dio/dio.dart';
 import 'package:weatherly/env/env.dart';
+import 'package:weatherly/core/service/weather_cache_service.dart';
 import 'package:weatherly/model/weather_entity.dart';
 import 'package:weatherly/model/weather_mapper.dart';
 import 'package:weatherly/model/weather_model.dart';
 
 class WeatherService {
   final Dio dio;
-  String baseUrl = "http://api.weatherapi.com/v1";
+  final WeatherCacheService cacheService;
 
-  WeatherService({required this.dio});
+  static const String baseUrl = 'https://api.weatherapi.com/v1';
 
-  Future<WeatherEntity> getWeather(String city) async {
-    String url =
-        "$baseUrl/forecast.json?key=${Env.apiKey}&q=$city&days=7&lang=ar";
-    var response = await dio.get(url);
-    if (response.statusCode == 200) {
-      return WeatherMapper.mapModelToEntity(
-          WeatherModel.fromJson(response.data));
-    } else {
-      throw Exception('فشل في التحميل');
+  WeatherService({required this.dio, required this.cacheService});
+
+  /// جلب توقعات الطقس باستخدام الموقع الجغرافي
+  Future<WeatherEntity> getWeatherForCurrentLocation({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final response = await dio.get(
+        '$baseUrl/forecast.json',
+        queryParameters: {
+          'key': Env.apiKey,
+          'q': '$latitude,$longitude',
+          'days': 7,
+          'lang': 'ar',
+        },
+      );
+
+      final weather = _parseWeather(response);
+      await cacheService.saveWeather(
+        WeatherCacheService.currentLocationKey,
+        weather,
+      );
+      return weather;
+    } on DioException catch (error) {
+      if (!_isNetworkFailure(error)) {
+        rethrow;
+      }
+      final cachedWeather = cacheService.getCurrentLocationWeather();
+      if (cachedWeather != null) {
+        return cachedWeather;
+      }
+      rethrow;
     }
   }
 
-  Future<WeatherEntity> getWeatherForCurrentLocation(
-      {required double latitude, required double longitude}) async {
-    String url =
-        "$baseUrl/forecast.json?key=${Env.apiKey}&q=$latitude,$longitude&days=7&lang=ar";
-    var response = await dio.get(url);
-    if (response.statusCode == 200) {
-      return WeatherMapper.mapModelToEntity(
-          WeatherModel.fromJson(response.data));
-    } else {
-      throw Exception('فشل في التحميل');
+  Future<List<String>> fetchRecommendedPlaces({
+    required String city,
+  }) async {
+    if (city.trim().isEmpty) {
+      return [];
     }
-  }
 
-  List<String> suggestedPlaces = [];
-
-  // دالة لجلب الأماكن المقترحة باستخدام WeatherAPI
-  Future<List<String>> fetchRecommendedPlaces({required String city}) async {
-    final response = await dio
-        .get("$baseUrl/search.json?key=${Env.apiKey}&q=$city&days=7&lang=ar");
+    final response = await dio.get(
+      '$baseUrl/search.json',
+      queryParameters: {
+        'key': Env.apiKey,
+        'q': city.trim(),
+      },
+    );
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = response.data; //
-      return suggestedPlaces = data
-          .map((place) =>
-              place['name'].toString()) // الحصول على أسماء المدن من استجابة API
+      final data = response.data as List<dynamic>;
+
+      return data
+          .map(
+            (place) => place['name'].toString(),
+          )
           .toList();
-    } else {
-      throw Exception('فشل في جلب الأماكن المقترحة');
+    }
+
+    throw Exception('فشل في جلب الأماكن المقترحة');
+  }
+
+  /// جلب توقعات الطقس باستخدام اسم المدينة
+  Future<WeatherEntity> getWeather(String city) async {
+    final cacheKey = cacheService.cityKey(city);
+    try {
+      final response = await dio.get(
+        '$baseUrl/forecast.json',
+        queryParameters: {
+          'key': Env.apiKey,
+          'q': city,
+          'days': 7,
+          'lang': 'ar',
+        },
+      );
+
+      final weather = _parseWeather(response);
+      await cacheService.saveWeather(cacheKey, weather);
+      return weather;
+    } on DioException catch (error) {
+      if (!_isNetworkFailure(error)) {
+        rethrow;
+      }
+      final cachedWeather = cacheService.getWeather(cacheKey);
+      if (cachedWeather != null) {
+        return cachedWeather;
+      }
+      rethrow;
     }
   }
 
-  // عند اختيار المستخدم اقتراحًا
- 
+  WeatherEntity? getCachedCurrentLocationWeather() =>
+      cacheService.getCurrentLocationWeather();
+
+  bool _isNetworkFailure(DioException error) {
+    switch (error.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+      case DioExceptionType.connectionError:
+      case DioExceptionType.unknown:
+        return true;
+      case DioExceptionType.badCertificate:
+      case DioExceptionType.badResponse:
+      case DioExceptionType.cancel:
+        return false;
+    }
+  }
+
+  /// تحويل استجابة API إلى WeatherEntity
+  WeatherEntity _parseWeather(Response response) {
+    if (response.statusCode == 200) {
+      return WeatherMapper.mapModelToEntity(
+        WeatherModel.fromJson(
+          response.data as Map<String, dynamic>,
+        ),
+      );
+    }
+
+    throw Exception('فشل في تحميل بيانات الطقس');
+  }
+
+  /// البحث عن المدن والأماكن المقترحة
 }

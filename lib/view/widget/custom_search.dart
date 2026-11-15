@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherly/core/utils/app_color.dart';
 import 'package:weatherly/cubits/city_weather_cubit/city_weather_cubit.dart';
+import 'package:weatherly/view/widget/custom_back_button.dart';
 import 'package:weatherly/view/widget/custom_text_form.dart';
 
 class CustomSearch extends StatefulWidget {
@@ -21,15 +22,12 @@ class _CustomSearchState extends State<CustomSearch> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          IconButton(
+          CustomBackButton(
               onPressed: () {
                 FocusScope.of(context).unfocus();
                 Navigator.pop(context);
               },
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              )),
+              size: 24),
           Expanded(
             child: Directionality(
               textDirection: TextDirection.rtl,

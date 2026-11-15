@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weatherly/core/utils/app_color.dart';
 
 import 'package:weatherly/model/weather_entity.dart';
+import 'package:weatherly/view/widget/custom_cached_weather_image.dart';
 
 class CustomDaysCurrentDay extends StatelessWidget {
   const CustomDaysCurrentDay({
@@ -24,8 +25,8 @@ class CustomDaysCurrentDay extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Image.network(
-            "${weather.days![0].icon}",
+          CustomCachedWeatherImage(
+            imageUrl: weather.days![0].icon,
             height: 150,
             width: 100,
             fit: BoxFit.cover,

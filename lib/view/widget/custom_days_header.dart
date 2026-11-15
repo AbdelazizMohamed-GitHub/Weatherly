@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:weatherly/model/weather_entity.dart';
+import 'package:weatherly/view/widget/custom_back_button.dart';
 
 class CustomDaysHeader extends StatelessWidget {
   const CustomDaysHeader({
@@ -13,21 +14,13 @@ class CustomDaysHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-        ),
+        const CustomBackButton(),
         const Spacer(flex: 1),
         Column(
           children: [
             Text('${weather.cityName}',
                 style: const TextStyle(
-                    fontSize: 24.0,
+                    fontSize: 22.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.white)),
             Text(

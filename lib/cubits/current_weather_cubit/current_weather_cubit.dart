@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,30 +6,51 @@ import 'package:weatherly/core/failure/dio_error.dart';
 import 'package:weatherly/core/service/location_service.dart';
 import 'package:weatherly/core/service/weather_service.dart';
 import 'package:weatherly/cubits/current_weather_cubit/current_weather_state.dart';
-import 'package:weatherly/model/weather_entity.dart';
 
 class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
-  CurrentWeatherCubit(
-   {required this.weatherService}
-  ) : super(WeatherInitial());
+  CurrentWeatherCubit({required this.weatherService}) : super(WeatherInitial());
   final WeatherService weatherService;
   getWeatherForCurrentLocation() async {
+    emit(CurrentWeatherLoading());
+    Position position;
     try {
-      emit(CurrentWeatherLoading());
-      Position position = await LocationService.getCurrentLocation();
-     
-      WeatherEntity weather = await weatherService
-          .getWeatherForCurrentLocation(
-              latitude: position.latitude, longitude: position.longitude);
-      emit(CurrentWeatherSuccess(weatherEntity: weather));
+      position = await LocationService.getCurrentLocation();
     } catch (e) {
-     
-      if (e is DioException) {
-        return emit(
-            CurrentWeatherError(error: DioExceptions.fromDioError(e).message));
+      try {
+        final cachedWeather = weatherService.getCachedCurrentLocationWeather();
+        if (cachedWeather != null) {
+          emit(CurrentWeatherSuccess(weatherEntity: cachedWeather));
+          return;
+        }
+      } catch (cacheError) {
+        _emitError(cacheError);
+        return;
       }
 
-      emit(CurrentWeatherError(error: e.toString()));
+      _emitError(e);
+      return;
     }
+
+    try {
+      final weather = await weatherService.getWeatherForCurrentLocation(
+        latitude: position.latitude,
+        longitude: position.longitude,
+      );
+      emit(CurrentWeatherSuccess(weatherEntity: weather));
+    } catch (e) {
+      _emitError(e);
+    }
+  }
+
+  void _emitError(Object error) {
+    if (error is DioException) {
+      emit(
+        CurrentWeatherError(
+          error: DioExceptions.fromDioError(error).message,
+        ),
+      );
+      return;
+    }
+    emit(CurrentWeatherError(error: error.toString()));
   }
 }

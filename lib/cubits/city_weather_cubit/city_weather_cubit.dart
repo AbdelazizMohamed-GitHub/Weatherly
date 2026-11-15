@@ -26,16 +26,35 @@ class CityWeatherCubit extends Cubit<CityWeatherState> {
   }
 
   Future<void> getRecommendedPlace({required String cityName}) async {
+    if (cityName.trim().isEmpty) {
+      emit(FetchRecommendedLocationSuccess(suggestedPlaces: const []));
+      return;
+    }
+
     emit(FetchRecommendedLocationLoading());
     try {
-      await weatherService
-          .fetchRecommendedPlaces(
+      final places = await weatherService.fetchRecommendedPlaces(
         city: cityName,
-      )
-          .then((value) {
-        emit(FetchRecommendedLocationSuccess(suggestedPlaces: value));
-      });
-      // ignore: empty_catches
-    } catch (e) {}
+      );
+      emit(FetchRecommendedLocationSuccess(suggestedPlaces: places));
+    } on DioException catch (error) {
+      final isNetworkFailure = switch (error.type) {
+        DioExceptionType.connectionTimeout ||
+        DioExceptionType.sendTimeout ||
+        DioExceptionType.receiveTimeout ||
+        DioExceptionType.connectionError =>
+          true,
+        _ => false,
+      };
+      emit(
+        FetchRecommendedLocationError(
+          error: isNetworkFailure
+              ? 'لا يوجد اتصال بالإنترنت'
+              : DioExceptions.fromDioError(error).message,
+        ),
+      );
+    } catch (error) {
+      emit(FetchRecommendedLocationError(error: error.toString()));
+    }
   }
 }
