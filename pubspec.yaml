@@ -31,6 +31,7 @@ dependencies:
   bloc: ^8.1.4
   cached_network_image: ^3.4.1
   card_swiper: ^3.0.1
+  connectivity_plus: ^7.3.2
   cupertino_icons: ^1.0.6
   dio: ^5.7.0
   envied: ^0.5.4+1

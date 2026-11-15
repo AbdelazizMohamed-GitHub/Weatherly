@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weatherly/core/service/app_setting_servise.dart';
 
+import 'package:weatherly/core/service/internet_service.dart';
 import 'package:weatherly/core/service/weather_cache_service.dart';
 import 'package:weatherly/core/service/weather_service.dart';
 
@@ -17,6 +18,8 @@ Future<void> setupLocator() async {
   getIt.registerLazySingleton<WeatherCacheService>(
     () => WeatherCacheService(box: weatherBox),
   );
+
+  getIt.registerLazySingleton<InternetService>(() => InternetService());
 
   getIt.registerLazySingleton<WeatherService>(
     () => WeatherService(

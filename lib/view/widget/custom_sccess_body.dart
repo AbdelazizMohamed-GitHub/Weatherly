@@ -16,16 +16,17 @@ class CustomSccessBody extends StatelessWidget {
     super.key,
     required this.weather,
     this.isHome = true,
-    this.isOffline = false,
   });
   final WeatherEntity weather;
   final bool isHome;
-  final bool isOffline;
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: ()async {
-      return await  context.read<CurrentWeatherCubit>().getWeatherForCurrentLocation();
+      onRefresh: () async {
+        return await context
+            .read<CurrentWeatherCubit>()
+            .getWeatherForCurrentLocation();
       },
       child: Container(
         width: double.infinity,
@@ -45,7 +46,7 @@ class CustomSccessBody extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            if (isHome && isOffline) const CustomNoInternetBanner(),
+            if (isHome) const CustomNoInternetBanner(),
             CustomHeader(
               weather: weather,
               isHome: isHome,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weatherly/core/service/internet_service.dart';
 import 'package:weatherly/core/service/weather_service.dart';
 import 'package:weatherly/core/utils/funtion.dart';
 import 'package:weatherly/cubits/current_weather_cubit/current_weather_cubit.dart';
@@ -16,9 +17,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          CurrentWeatherCubit(weatherService: getIt.get<WeatherService>())
-            ..getWeatherForCurrentLocation(),
+      create: (context) => CurrentWeatherCubit(
+        weatherService: getIt.get<WeatherService>(),
+        internetService: getIt.get<InternetService>(),
+      )..getWeatherForCurrentLocation(),
       child: BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(
         builder: (context, state) {
           return Scaffold(
@@ -28,14 +30,12 @@ class HomeScreen extends StatelessWidget {
                   : state is CurrentWeatherError
                       ? Column(
                           children: [
-                            if (state.isOffline)
-                              const CustomNoInternetBanner(),
+                            const CustomNoInternetBanner(),
                             Expanded(
                               child: CustomError(
                                 onPressed: () async {
                                   LocationPermission? permission;
-                                  if (permission ==
-                                      LocationPermission.denied) {
+                                  if (permission == LocationPermission.denied) {
                                     permission =
                                         await Geolocator.requestPermission();
                                   } else {
@@ -58,7 +58,6 @@ class HomeScreen extends StatelessWidget {
                               },
                               child: CustomSccessBody(
                                 weather: state.weatherEntity,
-                                isOffline: state.isOffline,
                               ),
                             )
                           : const SizedBox(),
